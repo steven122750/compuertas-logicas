@@ -100,7 +100,7 @@ class Gate {
             this.output = 0;
             return this.output;
         }
-    
+
         const inputVals = this.inputs.map(i => i.evaluate());
         switch (this.type) {
             case 'AND':
@@ -125,128 +125,139 @@ class Gate {
                 this.output = inputVals.reduce((a, b) => a ^ b, 0) === 1 ? 0 : 1;
                 break;
         }
-    
+
         return this.output;
     }
 
     draw() {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.strokeStyle = 'white';
-    ctx.lineWidth = 2;
-
-    const inputRadius = 5;
-    const inputOffsetX = -20;
-    const outputOffsetX = 65;
-    const inputCount = this.inputs.length || (this.type === 'NOT' ? 1 : 2);
-
-    const gateHeight = Math.max(40, inputCount * 20); // Escalamos según entradas
-    const inputSpacing = gateHeight / (inputCount + 1);
-    const outputY = gateHeight / 2;
-
-    // Entradas (líneas y puntos)
-    for (let i = 0; i < inputCount; i++) {
-        const inputY = inputSpacing * (i + 1);
-
-        // Línea
-        ctx.beginPath();
-        ctx.moveTo(inputOffsetX - 10, inputY);
-        ctx.lineTo(0, inputY);
-        ctx.stroke();
-
-        // Círculo
-        ctx.beginPath();
-        ctx.fillStyle = 'cyan';
-        ctx.arc(inputOffsetX, inputY, inputRadius, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    // Compensar forma para que quede centrada verticalmente respecto a entradas
-    ctx.save();
-    ctx.translate(0, 0);
-
-    switch (this.type) {
-        case 'AND':
-        case 'NAND':
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        const inputRadius = 5;
+        const inputOffsetX = -20;
+        const outputOffsetX = 65;
+        const inputCount = this.inputs.length || (this.type === 'NOT' ? 1 : 2);
+    
+        const gateHeight = Math.max(40, inputCount * 20);
+        const inputSpacing = gateHeight / (inputCount + 1);
+        const outputY = gateHeight / 2;
+    
+        // Entradas
+        for (let i = 0; i < inputCount; i++) {
+            const inputY = inputSpacing * (i + 1);
+    
+            // Línea
             ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(30, 0);
-            ctx.arc(30, gateHeight / 2, gateHeight / 2, -Math.PI / 2, Math.PI / 2);
-            ctx.lineTo(0, gateHeight);
-            ctx.closePath();
-            break;
-
-        case 'OR':
-        case 'NOR':
-            ctx.beginPath();
-            ctx.moveTo(0, gateHeight);
-            ctx.quadraticCurveTo(10, gateHeight / 2, 0, 0);
-            ctx.lineTo(20, 0);
-            ctx.quadraticCurveTo(80, gateHeight / 2, 20, gateHeight);
-            ctx.closePath();
-            break;
-
-        case 'XOR':
-        case 'XNOR':
-            ctx.beginPath();
-            ctx.moveTo(-10, gateHeight);
-            ctx.quadraticCurveTo(0, gateHeight / 2, -10, 0);
+            ctx.strokeStyle = '#00ffffaa';
+            ctx.moveTo(inputOffsetX - 10, inputY);
+            ctx.lineTo(0, inputY);
             ctx.stroke();
-
+    
+            // Círculo
             ctx.beginPath();
-            ctx.moveTo(0, gateHeight);
-            ctx.quadraticCurveTo(10, gateHeight / 2, 0, 0);
-            ctx.lineTo(20, 0);
-            ctx.quadraticCurveTo(80, gateHeight / 2, 20, gateHeight);
-            ctx.closePath();
-            break;
-
-        case 'NOT':
-            ctx.beginPath();
-            ctx.moveTo(0, 0);
-            ctx.lineTo(40, gateHeight / 2);
-            ctx.lineTo(0, gateHeight);
-            ctx.closePath();
-            break;
-    }
-
-    ctx.stroke();
-    ctx.restore();
-
-    // Círculo de negación
-    if (['NOT', 'NAND', 'NOR', 'XNOR'].includes(this.type)) {
+            ctx.fillStyle = '#00ffff';
+            ctx.shadowColor = '#00ffff88';
+            ctx.shadowBlur = 5;
+            ctx.arc(inputOffsetX, inputY, inputRadius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+    
+        // Dibujo de compuerta
+        ctx.save();
+        ctx.translate(0, 0);
         ctx.beginPath();
-        ctx.arc(outputOffsetX - 7, outputY, 5, 0, Math.PI * 2);
+    
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#ffffff';
+        ctx.fillStyle = '#2a2f45';
+        ctx.shadowColor = '#00000088';
+        ctx.shadowBlur = 4;
+    
+        switch (this.type) {
+            case 'AND':
+            case 'NAND':
+                ctx.moveTo(0, 0);
+                ctx.lineTo(30, 0);
+                ctx.arc(30, gateHeight / 2, gateHeight / 2, -Math.PI / 2, Math.PI / 2);
+                ctx.lineTo(0, gateHeight);
+                ctx.closePath();
+                break;
+    
+            case 'OR':
+            case 'NOR':
+                ctx.moveTo(0, gateHeight);
+                ctx.quadraticCurveTo(10, gateHeight / 2, 0, 0);
+                ctx.lineTo(20, 0);
+                ctx.quadraticCurveTo(80, gateHeight / 2, 20, gateHeight);
+                ctx.closePath();
+                break;
+    
+            case 'XOR':
+            case 'XNOR':
+                ctx.moveTo(-10, gateHeight);
+                ctx.quadraticCurveTo(0, gateHeight / 2, -10, 0);
+                ctx.stroke();
+    
+                ctx.beginPath();
+                ctx.moveTo(0, gateHeight);
+                ctx.quadraticCurveTo(10, gateHeight / 2, 0, 0);
+                ctx.lineTo(20, 0);
+                ctx.quadraticCurveTo(80, gateHeight / 2, 20, gateHeight);
+                ctx.closePath();
+                break;
+    
+            case 'NOT':
+                ctx.moveTo(0, 0);
+                ctx.lineTo(40, gateHeight / 2);
+                ctx.lineTo(0, gateHeight);
+                ctx.closePath();
+                break;
+        }
+    
+        ctx.fill();
         ctx.stroke();
+        ctx.shadowBlur = 0;
+        ctx.restore();
+    
+        // Círculo de negación
+        if (['NOT', 'NAND', 'NOR', 'XNOR'].includes(this.type)) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#ffffff';
+            ctx.arc(outputOffsetX - 7, outputY, 5, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+    
+        // Línea de salida
+        ctx.beginPath();
+        ctx.strokeStyle = '#00ffffaa';
+        ctx.moveTo(outputOffsetX - 2, outputY);
+        ctx.lineTo(outputOffsetX + 10, outputY);
+        ctx.stroke();
+    
+        // Etiqueta
+        ctx.fillStyle = '#00ffff';
+        ctx.font = 'bold 13px Segoe UI';
+        ctx.fillText(this.type, 5, gateHeight + 16);
+    
+        // Valor de salida
+        if (this.output !== null) {
+            ctx.fillStyle = this.output === 1 ? '#2ecc71' : '#e74c3c';
+            ctx.font = 'bold 18px Segoe UI';
+            ctx.fillText(this.output, outputOffsetX + 15, outputY + 6);
+        }
+    
+        // Círculo de salida
+        ctx.beginPath();
+        ctx.fillStyle = '#00ffff';
+        ctx.shadowColor = '#00ffff88';
+        ctx.shadowBlur = 5;
+        ctx.arc(outputOffsetX, outputY, inputRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    
+        ctx.restore();
     }
-
-    // Línea de salida
-    ctx.beginPath();
-    ctx.moveTo(outputOffsetX - 2, outputY);
-    ctx.lineTo(outputOffsetX + 10, outputY);
-    ctx.stroke();
-
-    // Etiqueta
-    ctx.fillStyle = 'white';
-    ctx.font = '12px Arial';
-    ctx.fillText(this.type, 5, gateHeight + 12);
-
-    // Valor de salida
-    if (this.output !== null) {
-        ctx.fillStyle = this.output === 1 ? 'lime' : 'red';
-        ctx.font = 'bold 16px Arial';
-        ctx.fillText(this.output, outputOffsetX + 15, outputY + 5);
-    }
-
-    // Círculo de salida
-    ctx.beginPath();
-    ctx.fillStyle = 'cyan';
-    ctx.arc(outputOffsetX, outputY, inputRadius, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
-}
-
+    
 
 }
 
@@ -261,11 +272,11 @@ function drawCanvas() {
         const to = conn.to;
 
         const fromX = from instanceof Gate ? from.x + gateSize + 8 :
-                       from instanceof SplitNode ? from.x :
-                       from.x + 15;
+            from instanceof SplitNode ? from.x :
+                from.x + 15;
         const fromY = from instanceof Gate ? from.y + gateSize / 2 :
-                       from instanceof SplitNode ? from.y :
-                       from.y;
+            from instanceof SplitNode ? from.y :
+                from.y;
 
         const idx = to.inputs.indexOf(from);
         const toX = to.x - 8;
@@ -334,7 +345,7 @@ function drawCanvas() {
         const inY = hoveredInputIndex === 0
             ? hoveredGate.y + gateSize / 3
             : hoveredGate.y + (2 * gateSize) / 3;
-    
+
         ctx.beginPath();
         ctx.arc(inX, inY, RANGO_CONEXION, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(0, 150, 255, 0.3)';
@@ -342,7 +353,7 @@ function drawCanvas() {
         ctx.strokeStyle = 'rgba(0, 150, 255, 0.6)';
         ctx.stroke();
     }
-    
+
 }
 
 canvas.addEventListener('mousedown', e => {
@@ -425,15 +436,15 @@ canvas.addEventListener('mousedown', e => {
 
 
     // Iniciar conexión desde SplitNode
-for (const inp of inputs) {
-    if (inp instanceof SplitNode) {
-        if (Math.hypot(x - inp.x, y - inp.y) < 6) {
-            selectedOutput = { ref: inp };
-            draggingConnection = true;
-            return;
+    for (const inp of inputs) {
+        if (inp instanceof SplitNode) {
+            if (Math.hypot(x - inp.x, y - inp.y) < 6) {
+                selectedOutput = { ref: inp };
+                draggingConnection = true;
+                return;
+            }
         }
     }
-}
 
 
 });
@@ -747,4 +758,82 @@ function drawBulb(ctx, canvas, gates) {
     }
 
     ctx.restore();
+}
+
+
+
+// Filtrar solo los Inputs reales (excluye SplitNode si está en el mismo array)
+function getBaseInputs() {
+    return inputs.filter(inp => inp instanceof Input);
+}
+
+// Genera todas las combinaciones binarias posibles de n bits
+function generateCombinations(n) {
+    const total = 2 ** n;
+    const combos = [];
+
+    for (let i = 0; i < total; i++) {
+        const bin = i.toString(2).padStart(n, '0').split('').map(Number);
+        combos.push(bin);
+    }
+
+    return combos;
+}
+
+// Detecta compuertas de salida (que no alimentan a otras compuertas)
+function getOutputGates() {
+    return gates.filter(g =>
+        !gates.some(other => other.inputs.includes(g))
+    );
+}
+
+// Evalúa el circuito para todas las combinaciones
+function evaluateCircuit(combos, baseInputs) {
+    const results = [];
+
+    for (const combo of combos) {
+        // Setea valores a cada Input
+        baseInputs.forEach((inp, idx) => inp.value = combo[idx]);
+
+        // Evalúa todas las compuertas
+        gates.forEach(g => g.evaluate());
+
+        // Obtiene salidas finales
+        const outputs = getOutputGates().map(g => g.output);
+        results.push([...combo, ...outputs]);
+    }
+
+    return results;
+}
+
+// Renderiza la tabla HTML
+function renderTruthTable(data, baseInputs, outputCount) {
+    const table = document.getElementById('truthTable');
+    if (!table) return;
+
+    const inputHeaders = baseInputs.map((_, i) => `In${i + 1}`);
+    const outputHeaders = Array.from({ length: outputCount }, (_, i) => `Out${i + 1}`);
+    const thead = `<tr>${[...inputHeaders, ...outputHeaders].map(h => `<th>${h}</th>`).join('')}</tr>`;
+
+    const rows = data.map(row => {
+        const cells = row.map((val, idx) => {
+            // Solo coloreamos las salidas (últimos outputCount valores)
+            const isOutput = idx >= row.length - outputCount;
+            const cellClass = isOutput ? `highlight-${val}` : '';
+            return `<td class="${cellClass}">${val}</td>`;
+        });
+        return `<tr>${cells.join('')}</tr>`;
+    }).join('');
+
+    table.innerHTML = `<thead>${thead}</thead><tbody>${rows}</tbody>`;
+}
+
+
+// Función principal para generar todo
+function generateTruthTable() {
+    const baseInputs = getBaseInputs();
+    const combos = generateCombinations(baseInputs.length);
+    const results = evaluateCircuit(combos, baseInputs);
+    const outputs = getOutputGates();
+    renderTruthTable(results, baseInputs, outputs.length);
 }

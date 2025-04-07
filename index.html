@@ -15,8 +15,7 @@
       <option value="4">4</option>
     </select>
     <button onclick="resetCanvas()">Reset</button>
-    
-    <!-- Botones para compuertas -->
+
     <button onclick="selectGateToAdd('AND')">Añadir AND</button>
     <button onclick="selectGateToAdd('OR')">Añadir OR</button>
     <button onclick="selectGateToAdd('XOR')">Añadir XOR</button>
@@ -26,12 +25,13 @@
     <button onclick="selectGateToAdd('XNOR')">Añadir XNOR</button>
   </div>
 
+  <canvas id="canvas" width="1200" height="600"></canvas>
+
+  <div id="truth-table-container">
+    <button class="generate-btn" onclick="generateTruthTable()">Generar Tabla de Verdad</button>
+    <table id="truthTable"></table>
+  </div>
   
-
-  <canvas id="canvas" width="1200" height="600" style="background:#222; display:block; margin-top:10px;"></canvas>
-
-
-
 
   <script src="script.js"></script>
 </body>

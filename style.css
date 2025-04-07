@@ -1,49 +1,139 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #1e1e2f;
-    color: white;
-  }
-  
-  #controls {
-    padding: 1em;
-    background: #282c3c;
-    display: flex;
-    align-items: center;
-    gap: 1em;
-  }
-  
-  button,
-  select {
-    padding: 0.5em;
-    background: #3a3f58;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  canvas {
-    display: block;
-    background: #10121b;
-  }
-  #controls {
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  #controls button {
-    background-color: #4CAF50;
-    color: white;
-    margin: 5px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  #controls button:hover {
-    background-color: #357a38;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1e1e2f;
+  color: white;
+}
+
+#controls {
+  padding: 1.5em 2em;
+  margin-bottom: 30px;
+  background: #2a2f45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid #3f3f55;
+}
+
+button,
+select {
+  padding: 0.8em 1.2em;
+  background: #3a3f58;
+  color: white;
+  border: 1px solid #4f5673;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0.3em;
+}
+
+button:hover,
+select:hover {
+  background-color: #505679;
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #394060;
+  transform: scale(0.98);
+}
+
+canvas {
+  display: block;
+  background: #10121b;
+  border-top: 2px solid #282c3c;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 40px auto;
+  border-radius: 10px;
+}
+
+/* Botones de control específicos */
+#controls button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+#controls button:hover {
+  background-color: #3e8e41;
+  box-shadow: 0 0 10px #4CAF50aa;
+}
+
+#controls button:active {
+  background-color: #357a38;
+}
+
+/* Contenedor para centrar tabla */
+#truth-table-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+#truthTable {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  background-color: #2a2f45;
+  color: #f0f0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+#truthTable th,
+#truthTable td {
+  padding: 14px 20px;
+  border: 1px solid #3f3f55;
+  font-size: 16px;
+}
+
+#truthTable thead {
+  background-color: #394060;
+  color: #00ffff;
+  font-size: 17px;
+}
+
+#truthTable tbody tr:nth-child(even) {
+  background-color: #232840;
+}
+
+#truthTable tbody tr:hover {
+  background-color: #3a3f5a;
+}
+
+#truthTable .highlight-1 {
+  background-color: #2ecc71 !important;
+  color: #000;
+  font-weight: bold;
+}
+
+#truthTable .highlight-0 {
+  background-color: #e74c3c !important;
+  color: #fff;
+  font-weight: bold;
+}
+
+button.generate-btn {
+  background-color: #2980b9;
+  font-size: 17px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+button.generate-btn:hover {
+  background-color: #3498db;
+  box-shadow: 0 0 10px #3498db99;
+}
