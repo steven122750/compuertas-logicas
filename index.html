@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compuertas Lógicas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="controls">
+    <label>Entradas:</label>
+    <select id="inputCount">
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <button onclick="resetCanvas()">Reset</button>
+    
+    <!-- Botones para compuertas -->
+    <button onclick="selectGateToAdd('AND')">Añadir AND</button>
+    <button onclick="selectGateToAdd('OR')">Añadir OR</button>
+    <button onclick="selectGateToAdd('XOR')">Añadir XOR</button>
+    <button onclick="selectGateToAdd('NOT')">Añadir NOT</button>
+    <button onclick="selectGateToAdd('NAND')">Añadir NAND</button>
+    <button onclick="selectGateToAdd('NOR')">Añadir NOR</button>
+    <button onclick="selectGateToAdd('XNOR')">Añadir XNOR</button>
+  </div>
+
+  
+
+  <canvas id="canvas" width="1200" height="600" style="background:#222; display:block; margin-top:10px;"></canvas>
+
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #1e1e2f;
+    color: white;
+  }
+  
+  #controls {
+    padding: 1em;
+    background: #282c3c;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  
+  button,
+  select {
+    padding: 0.5em;
+    background: #3a3f58;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  canvas {
+    display: block;
+    background: #10121b;
+  }
+  #controls {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  #controls button {
+    background-color: #4CAF50;
+    color: white;
+    margin: 5px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #controls button:hover {
+    background-color: #357a38;
+  }
+  
